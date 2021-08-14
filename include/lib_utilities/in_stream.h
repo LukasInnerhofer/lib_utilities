@@ -13,7 +13,7 @@ namespace LibUtilities
         InStream(std::shared_ptr<std::basic_istream<T>> stream) :
             m_stream{stream}
         {
-            if (!m_stream)
+            if (!*m_stream)
             {
                 throw std::invalid_argument{
                     "LibUtilities::InStream Error. Cannot construct InStream from invalid basic_istream"};
