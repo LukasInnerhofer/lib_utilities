@@ -9,3 +9,5 @@ add_library(
     include/${PROJECT_NAME}/in_stream.h)
 
 target_include_directories(${PROJECT_NAME} PRIVATE include)
+
+set_target_properties(${PROJECT_NAME} PROPERTIES LINKER_LANGUAGE CXX)
