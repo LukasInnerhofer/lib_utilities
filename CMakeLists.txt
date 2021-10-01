@@ -6,8 +6,9 @@ project(lib_utilities)
 
 add_library(
     ${PROJECT_NAME} 
+    include/${PROJECT_NAME}/badge.h
     include/${PROJECT_NAME}/in_stream.h)
 
-target_include_directories(${PROJECT_NAME} PRIVATE include)
+target_include_directories(${PROJECT_NAME} PUBLIC include)
 
 set_target_properties(${PROJECT_NAME} PROPERTIES LINKER_LANGUAGE CXX)
