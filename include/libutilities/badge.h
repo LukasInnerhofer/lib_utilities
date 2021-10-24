@@ -20,3 +20,5 @@ private:
 };
 
 }
+
+using LibUtilities::Badge;
