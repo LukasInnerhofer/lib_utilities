@@ -2,6 +2,7 @@
 
 #include <memory>
 #include <stdexcept>
+#include <type_traits>
 #include <utility>
 
 namespace LibUtilities
@@ -11,14 +12,79 @@ template <typename T>
 class NonNull
 {
 public:
+    template <typename TOther>
+    friend class NonNull;
+
     NonNull() = delete;
-    NonNull(auto... args) :
-        m_object{args...}
+    NonNull(NonNull<T> const &rhs) :
+        m_object{rhs.m_object}
+    {
+        validate();
+    }
+    NonNull(NonNull<T> &&rhs) :
+        m_object{std::move(rhs.m_object)}
+    {
+        validate();
+    }
+    template <typename TOther>
+    NonNull(NonNull<TOther> const &rhs) :
+        m_object{rhs.m_object}
+    {
+        validate();
+    }
+    template <typename TOther>
+    NonNull(NonNull<TOther> &&rhs) :
+        m_object{std::move(rhs.m_object)}
+    {
+        validate();
+    }
+    NonNull(T &&rhs) :
+        m_object{std::forward<T>(rhs)}
+    {
+        validate();
+    }
+    template <std::convertible_to<T> TOther>
+    NonNull(TOther &&rhs) :
+        m_object{std::forward<TOther>(rhs)}
     {
         validate();
     }
 
-    operator T() const
+    NonNull<T> &operator=(NonNull<T> const &rhs)
+    {
+        m_object = rhs.m_object;
+        return *this;
+    }
+    NonNull<T> &operator=(NonNull<T> &&rhs)
+    {
+        m_object = std::move(rhs.m_object);
+        return *this;
+    }
+    template <typename TOther>
+    NonNull<T> &operator=(NonNull<TOther> const &rhs)
+    {
+        m_object = rhs.m_object;
+        return *this;
+    }
+    template <typename TOther>
+    NonNull<T> &operator=(NonNull<TOther> &&rhs)
+    {
+        m_object = std::move(rhs.m_object);
+        return *this;
+    }
+    NonNull<T> &operator=(T &&rhs)
+    {
+        m_object = std::forward<T>(rhs);
+        return *this;
+    }
+    template <std::convertible_to<T> TOther>
+    NonNull<T> &operator=(TOther &&rhs)
+    {
+        m_object = std::forward<TOther>(rhs);
+        return *this;
+    }
+
+    operator T&()
     {
         return m_object;
     }
