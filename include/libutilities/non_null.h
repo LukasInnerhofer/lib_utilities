@@ -115,8 +115,19 @@ private:
 
 template <typename T>
 using NonNullSharedPtr = NonNull<std::shared_ptr<T>>;
+template <typename T, typename ...TArgs>
+NonNullSharedPtr<T> makeNonNullShared(TArgs &&...args) 
+{
+    return std::make_shared<T>(std::forward<TArgs>(args)...); 
+}
+
 template <typename T>
 using NonNullUniquePtr = NonNull<std::unique_ptr<T>>;
+template <typename T, typename ...TArgs>
+NonNullUniquePtr<T> makeNonNullUnique(TArgs &&...args) 
+{
+    return std::make_unique<T>(std::forward<TArgs>(args)...); 
+}
 
 }
 
