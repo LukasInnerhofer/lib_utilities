@@ -5,6 +5,8 @@
 #include <type_traits>
 #include <utility>
 
+#include "libutilities/concepts.h"
+
 namespace LibUtilities
 {
 
@@ -43,7 +45,7 @@ public:
     {
         validate();
     }
-    template <std::convertible_to<T> TOther>
+    template <Constructible TOther>
     NonNull(TOther &&rhs) :
         m_object{std::forward<TOther>(rhs)}
     {
