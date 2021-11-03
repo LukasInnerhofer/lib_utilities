@@ -132,4 +132,6 @@ NonNullUniquePtr<T> makeNonNullUnique(TArgs &&...args)
 }
 
 using LibUtilities::NonNullSharedPtr;
+using LibUtilities::makeNonNullShared;
 using LibUtilities::NonNullUniquePtr;
+using LibUtilities::makeNonNullUnique;
