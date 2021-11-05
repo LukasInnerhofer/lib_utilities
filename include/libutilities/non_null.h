@@ -79,7 +79,7 @@ public:
         m_object = std::forward<T>(rhs);
         return *this;
     }
-    template <std::convertible_to<T> TOther>
+    template <Constructible TOther>
     NonNull<T> &operator=(TOther &&rhs)
     {
         m_object = std::forward<TOther>(rhs);
