@@ -21,31 +21,27 @@ public:
     NonNull(NonNull<T> const &rhs) :
         m_object{rhs.m_object}
     {
-        validate();
     }
     NonNull(NonNull<T> &&rhs) :
         m_object{std::move(rhs.m_object)}
     {
-        validate();
     }
     template <typename TOther>
     NonNull(NonNull<TOther> const &rhs) :
         m_object{rhs.m_object}
     {
-        validate();
     }
     template <typename TOther>
     NonNull(NonNull<TOther> &&rhs) :
         m_object{std::move(rhs.m_object)}
     {
-        validate();
     }
     NonNull(T &&rhs) :
         m_object{std::forward<T>(rhs)}
     {
         validate();
     }
-    template <Constructible TOther>
+    template <typename TOther> requires Constructible<T, TOther>
     NonNull(TOther &&rhs) :
         m_object{std::forward<TOther>(rhs)}
     {
@@ -79,7 +75,7 @@ public:
         m_object = std::forward<T>(rhs);
         return *this;
     }
-    template <Constructible TOther>
+    template <typename TOther> requires Constructible<T, TOther>
     NonNull<T> &operator=(TOther &&rhs)
     {
         m_object = std::forward<TOther>(rhs);
